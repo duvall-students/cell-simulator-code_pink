@@ -18,7 +18,7 @@ public class RockPaperScissors {
 	// constructor method 
 	public RockPaperScissors(int rows, int columns){
 		assert(rows > 0 && columns > 0);
-		createRockPaperScissors(rows, columns);
+		//createRockPaperScissors(rows, columns);
 	}
 
 	// get the number of rows from the user
@@ -94,7 +94,7 @@ public class RockPaperScissors {
 			// iterate through rows
 			int pyramid = 2;
 			for(int j = rockPaperScissors.length/2; j > 0; j--){
-				if 
+		//		if 
 				
 			}
 		}
