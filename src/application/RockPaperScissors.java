@@ -1,7 +1,7 @@
 package application;
 
 import java.awt.Point;
-import java.util.HashMap;
+import java.util.HashMap; 
 
 public class RockPaperScissors {
 	
@@ -78,7 +78,7 @@ public class RockPaperScissors {
 	}
 	
 	// resets the maze to its original state
-	public void createMaze(){
+	public void createModel(){
 		assert(rockPaperScissors != null);
 		// iterate through columns
 		for(int i = 0; i< rockPaperScissors[i].length; i++){
@@ -131,7 +131,8 @@ public class RockPaperScissors {
 			markPathAsRock(square);
 		}
 	}
-		
+	
+	// returns a map with the count of each neighbor type  
 	public HashMap<String, Integer> getNeighbors(Point square) {
 		HashMap<String, Integer> neighbors = new HashMap<String, Integer>();
 		int paperNeighbors = 0;
