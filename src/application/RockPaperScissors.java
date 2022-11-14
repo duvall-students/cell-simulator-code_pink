@@ -15,7 +15,7 @@ public class RockPaperScissors {
 	// squares that make up the maze
 	private int[][] rockPaperScissors;
 	
-	private RockPaperScissorsController rpcController;
+	//private RockPaperScissorsController rpcController;
 	
 	// constructor method 
 	public RockPaperScissors(int rows, int columns){
@@ -118,6 +118,7 @@ public class RockPaperScissors {
 		}
 	}
 	
+	// converts type if winning neighbors are over threshold
 	public void convertType(Point square) {
 		assert(validPoint(square));
 		HashMap<String, Integer> neighbors = (getNeighbors(square));
