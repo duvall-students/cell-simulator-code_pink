@@ -20,7 +20,7 @@ public class RockPaperScissors {
 	// constructor method 
 	public RockPaperScissors(int rows, int columns){
 		assert(rows > 0 && columns > 0);
-		//createRockPaperScissors(rows, columns);
+		createModel(rows, columns);
 	}
 
 	// get the number of rows from the user
@@ -78,39 +78,40 @@ public class RockPaperScissors {
 	}
 	
 	// resets the maze to its original state
-	public void createModel(){
-		assert(rockPaperScissors != null);
+	public void createModel(int rows, int cols){
+		assert(rows > 0 && cols > 0);
+		rockPaperScissors = new int[rows][cols];
+		int i,j;
 		// iterate through columns
-		for(int i = 0; i< rockPaperScissors[i].length; i++){
+		for(i = 0; i< rockPaperScissors[i].length; i++){
 			// iterate through rows
-			for(int j =0; j < rockPaperScissors.length/2; j++){
+			for(j =0; j < rockPaperScissors.length/2; j++){
 				rockPaperScissors[i][i] = ROCK;
 			}
-			for(int j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++){
+			for(j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++){
 				rockPaperScissors[j][i] = SCISSORS;
 			}
 		}
 		// now that the grid is half rock/ half scissors, we can add in the paper	
-		int i = 0;
 		int stopLeft = rockPaperScissors.length/2 - 2;
 		int stopRight = rockPaperScissors.length - 1;
 		for(i = rockPaperScissors[i].length; i< rockPaperScissors[i].length/2; i--){
 			// iterate through rows
 			if (i < rockPaperScissors[i].length/4) {
-				for(int j = 0; j < rockPaperScissors.length/2 ; j++){
+				for(j = 0; j < rockPaperScissors.length/2 ; j++){
 					rockPaperScissors[i][j] = PAPER;
 					
 				}	
-				for(int j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++) {
+				for(j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++) {
 					rockPaperScissors[i][j] = PAPER;
 				}
 			}
 			else {
-				for(int j = rockPaperScissors.length/2; j > stopLeft; j--){
+				for(j = rockPaperScissors.length/2; j > stopLeft; j--){
 					rockPaperScissors[i][j] = PAPER;
 					stopLeft -= 2;
 				}
-				for(int j = rockPaperScissors.length/2; j < stopRight; j++){
+				for(j = rockPaperScissors.length/2; j < stopRight; j++){
 					rockPaperScissors[i][j] = PAPER;
 					stopRight -= 2;
 				}	
