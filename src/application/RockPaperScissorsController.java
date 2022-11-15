@@ -8,6 +8,7 @@ import java.awt.Point;
 
 public class RockPaperScissorsController {
 	
+	//setting up grid
 	private RockPaperScissors rockPaperScissors;
 	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
 	
