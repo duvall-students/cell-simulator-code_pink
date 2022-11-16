@@ -15,6 +15,12 @@ public class RockPaperScissors {
 	// squares that make up the maze
 	private int[][] rockPaperScissors;
 	
+	private HashMap<String, String> enemiesMap = new HashMap<String, String>() {{
+	    put("ROCK", "PAPER");
+	    put("PAPER", "SCISSORS");
+	    put("SCISSORS", "ROCK");
+	}};
+	
 	//private RockPaperScissorsController rpcController;
 	
 	// constructor method 
@@ -123,16 +129,18 @@ public class RockPaperScissors {
 	public void convertType(Point square) {
 		assert(validPoint(square));
 		HashMap<String, Integer> neighbors = (getNeighbors(square));
-		if (rockPaperScissors[square.x][square.y] == ROCK && neighbors.get("Papers") >= threshold) {
+		// if (neighbors.get(enemiesMap.get(rockPaperScissors[square.x][square.y])) >= threshold)
+		if (rockPaperScissors[square.x][square.y] == ROCK && neighbors.get(enemiesMap.get("ROCK")) >= threshold) {
 			markPathAsRock(square);
 		}	
-		else if (rockPaperScissors[square.x][square.y] == PAPER && neighbors.get("Scissors") >= threshold) {
+		else if (rockPaperScissors[square.x][square.y] == PAPER && neighbors.get(enemiesMap.get("PAPER")) >= threshold) {
 			markPathAsPaper(square);
 		}
-		else if (rockPaperScissors[square.x][square.y] == SCISSORS && neighbors.get("Rocks") >= threshold) {
+		else if (rockPaperScissors[square.x][square.y] == SCISSORS && neighbors.get(enemiesMap.get("SCISSORS")) >= threshold) {
 			markPathAsRock(square);
 		}
 	}
+	
 	
 	// returns a map with the count of each neighbor type  
 	public HashMap<String, Integer> getNeighbors(Point square) {
