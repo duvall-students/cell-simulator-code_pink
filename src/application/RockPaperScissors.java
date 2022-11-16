@@ -89,7 +89,7 @@ public class RockPaperScissors {
 		rockPaperScissors = new int[rows][cols];
 		int i,j;
 		// iterate through columns
-		for(i = 0; i< rockPaperScissors[i].length; i++){
+		for(i = 0; i< rockPaperScissors[i].length - 1; i++){
 			// iterate through rows
 			for(j =0; j < rockPaperScissors.length/2; j++){
 				rockPaperScissors[i][i] = ROCK;
@@ -101,7 +101,7 @@ public class RockPaperScissors {
 		// now that the grid is half rock/ half scissors, we can add in the paper	
 		int stopLeft = rockPaperScissors.length/2 - 2;
 		int stopRight = rockPaperScissors.length - 1;
-		for(i = rockPaperScissors[i].length; i< rockPaperScissors[i].length/2; i--){
+		for(i = rockPaperScissors[i].length -1; i< rockPaperScissors[i].length/2; i--){
 			// iterate through rows
 			if (i < rockPaperScissors[i].length/4) {
 				for(j = 0; j < rockPaperScissors.length/2 ; j++){
