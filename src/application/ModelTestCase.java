@@ -6,6 +6,8 @@ import java.awt.Point;
 
 import org.junit.Test;
 
+
+//@author Maggie Bickerstaffe
 public class ModelTestCase {
 	
 	RockPaperScissors rps = new RockPaperScissors(18, 18);
