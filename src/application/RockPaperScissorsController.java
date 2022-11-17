@@ -8,36 +8,42 @@ import java.awt.Point;
 
 public class RockPaperScissorsController {
 	
-	private final int NUM_ROWS = 18; 
-	private final int NUM_COLUMNS = 18;
-	
 	//setting up grid
+	private final int INITIAL_NUM_ROWS = 18; 
+	private final int INITIAL_NUM_COLUMNS = 18;
+	
+	
+	
 	private RockPaperScissors rockPaperScissors;
 	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
 	
 	public RockPaperScissorsController(RockPaperScissorsDisplay view) {
-		int numRows = NUM_ROWS;
-		int numColumns = NUM_COLUMNS;
+		int numRows = INITIAL_NUM_ROWS;
+		int numColumns = INITIAL_NUM_COLUMNS;
 		rockPaperScissors = new RockPaperScissors(numRows, numColumns);
 		rockPaperScissorsDisplay = view;
 	}
 	
 	public Point getGridDimensions() {
-		return new Point(NUM_ROWS, NUM_COLUMNS);
+		return new Point(INITIAL_NUM_ROWS, INITIAL_NUM_COLUMNS);
 	}
 
 	public int getNumRows() {
-		return NUM_ROWS;
+		return INITIAL_NUM_ROWS;
 	}
 	
 	public int getNumCols() {
-		return NUM_COLUMNS;
+		return INITIAL_NUM_COLUMNS;
 	}
+	
+	//Re-create the grid from scratch.
 	public void newModel() {
 		rockPaperScissors.createModel(rockPaperScissors.getNumRows(), rockPaperScissors.getNumCols());
+		rockPaperScissorsDisplay.redraw();
 	}
 	public int getCellState(Point position) {
 		return rockPaperScissors.get(position);
 	}
+	
 	
 }
