@@ -100,12 +100,12 @@ public class RockPaperScissorsDisplay extends Application {
 		root.setSpacing(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
 		root.getChildren().addAll(userInputDimensions, modelDrawing, controls);
-		
 		Scene scene = new Scene(root, (rpsController.getColumns())*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
 				(rpsController.getRows())*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
 
 		return scene;
 	}
+
 
 	private HBox setUpDimensionsTextField() {
 		// Set up user input area
