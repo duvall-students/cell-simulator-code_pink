@@ -3,13 +3,14 @@ package application;
 import java.awt.Point;
 import java.util.HashMap; 
 
+// @author Maggie Bickerstaffe 
 public class RockPaperScissors {
 	
 	// Possible states of squares that make up a maze
 	public static final int BORDER = 0;	
-	public static final int ROCK = 0;
-	public static final int PAPER = 0;	
-	public static final int SCISSORS = 0;
+	public static final int ROCK = 1;
+	public static final int PAPER = 2;	
+	public static final int SCISSORS = 3;
 	public int threshold = 3; 
 	
 	// squares that make up the maze
@@ -83,46 +84,50 @@ public class RockPaperScissors {
 		rockPaperScissors[square.x][square.y] = SCISSORS;
 	}
 	
+	public void iterateThroughModel(int start, int end, int state, int i) {
+		for (int j = start; j < end; j++) {
+			rockPaperScissors[j][i] = state;
+		}
+	}
 	// resets the maze to its original state
 	public void createModel(int rows, int cols){
 		assert(rows > 0 && cols > 0);
 		rockPaperScissors = new int[rows][cols];
 		int i,j;
 		// iterate through columns
-		for(i = 0; i< rockPaperScissors[i].length - 1; i++){
-			// iterate through rows
-			for(j =0; j < rockPaperScissors.length/2; j++){
-				rockPaperScissors[i][i] = ROCK;
-			}
-			for(j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++){
-				rockPaperScissors[j][i] = SCISSORS;
-			}
+		for(i = 1; i< rockPaperScissors.length/2; i++){
+			iterateThroughModel(1, rockPaperScissors[i].length-1, ROCK, i);
 		}
+		for(i = rockPaperScissors.length/2; i< rockPaperScissors.length-1; i++){
+			iterateThroughModel(1, rockPaperScissors[i].length-1, SCISSORS, i);
+		}
+
 		// now that the grid is half rock/ half scissors, we can add in the paper	
-		int stopLeft = rockPaperScissors.length/2 - 2;
-		int stopRight = rockPaperScissors.length - 1;
-		for(i = rockPaperScissors[i].length -1; i< rockPaperScissors[i].length/2; i--){
-			// iterate through rows
-			if (i < rockPaperScissors[i].length/4) {
-				for(j = 0; j < rockPaperScissors.length/2 ; j++){
-					rockPaperScissors[i][j] = PAPER;
-					
-				}	
-				for(j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++) {
+		int height = rockPaperScissors[1].length;
+		
+		int startLeft = rockPaperScissors.length/2 - 1;
+		int startRight = rockPaperScissors.length/2 + 1;
+		
+
+		for(i = 1; i < height-1; i++){
+			if (i > height*3/4) {
+				for(j = 1; j<rockPaperScissors.length-1; j++) {
 					rockPaperScissors[i][j] = PAPER;
 				}
 			}
-			else {
-				for(j = rockPaperScissors.length/2; j > stopLeft; j--){
+			if (i < height*3/4 + 1 && i > height/2) {
+				for(j = startLeft; j<rockPaperScissors.length/2; j++) {
 					rockPaperScissors[i][j] = PAPER;
-					stopLeft -= 2;
 				}
-				for(j = rockPaperScissors.length/2; j < stopRight; j++){
+				startLeft -= 2;
+				
+				for(j = rockPaperScissors.length/2; j<startRight; j++) {
 					rockPaperScissors[i][j] = PAPER;
-					stopRight -= 2;
-				}	
+				}
+				startRight += 2;
 			}
 		}
+
 	}
 	
 	// converts type if winning neighbors are over threshold
