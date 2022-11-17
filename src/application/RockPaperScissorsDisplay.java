@@ -19,6 +19,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
+
+//@author Shannon Seignious
 public class RockPaperScissorsDisplay extends Application {
 
 	/* 
@@ -28,8 +30,7 @@ public class RockPaperScissorsDisplay extends Application {
 	private final int EXTRA_VERTICAL = 100; 	// GUI area allowance when making the scene width
 	private final int EXTRA_HORIZONTAL = 150; 	// GUI area allowance when making the scene width
 	private final int BLOCK_SIZE = 25;     		// size of each cell in pixels
-	private final int INITIAL_NUM_OF_ROWS = 18; // initial number of rows
-	private final int INITIAL_NUM_OF_COLS = 18; // initial number of rows
+
 
 	private Scene myScene;						// the container for the GUI
 	private boolean paused = false;	
@@ -126,6 +127,10 @@ public class RockPaperScissorsDisplay extends Application {
 		dimensions.setAlignment(Pos.TOP_CENTER);
 		return dimensions;
 	}
+	
+	private void setNumRows() {
+		
+	}
 
 	private HBox setupControlButtons() {
 		// Make the controls part
@@ -157,13 +162,15 @@ public class RockPaperScissorsDisplay extends Application {
 	 * current state of that rectangle in the maze.  This 
 	 * method assumes the display maze matches the model maze
 	 */
-	/* public void redraw(){
-		for(int i = 0; i< mirrorMaze.length; i++){
-			for(int j =0; j < mirrorMaze[i].length; j++){
-				mirrorMaze[i][j].setFill(color[mazeController.getCellState(new Point(i,j))]);
+	public void redraw(){
+		for(int i = 0; i< mirrorModel.length; i++){
+			for(int j =0; j < mirrorModel[i].length; j++){
+				Point currentSquare = new Point(i,j);
+				rps.convertType(currentSquare);
+				mirrorModel[i][j].setFill(color[rpsController.getCellState(currentSquare)]);
 			}
 		}
-	} */
+	}
 	
 	/*
 	 * Toggle the pause button
