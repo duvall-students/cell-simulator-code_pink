@@ -3,8 +3,8 @@ package application;
 import java.awt.Point;
 
 public class RockPaperScissorsController {
-	private final int NUM_ROWS =30; 
-	private final int NUM_COLUMNS = 30;
+	private final int NUM_ROWS =18; 
+	private final int NUM_COLUMNS = 18;
 	
 	private RockPaperScissors rps;
 	
