@@ -36,8 +36,4 @@ public class RockPaperScissorsController {
 	public int getCellState(Point position) {
 		return rps.get(position);
 	}
-
-	
-	
-
 }
