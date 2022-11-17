@@ -6,8 +6,13 @@ public class RockPaperScissorsController {
 	private final int INITIAL_NUM_OF_ROWS = 18; // initial number of rows
 	private final int INITIAL_NUM_OF_COLS = 18; // initial number of rows
 	
+
+	private final int NUM_ROWS = 18; 
+	private final int NUM_COLUMNS = 18;
+
 	int numRows;
 	int numColumns;
+
 	
 	private RockPaperScissors rps;
 	
@@ -27,6 +32,12 @@ public class RockPaperScissorsController {
 	
 	public Point getMazeDimensions() {
 		return new Point(numRows, numColumns);
+	}
+	public void newModel() {
+		rockPaperScissors.createModel(rockPaperScissors.getNumRows(), rockPaperScissors.getNumCols());
+	}
+	public int getCellState(Point position) {
+		return rockPaperScissors.get(position);
 	}
 	
 	public void newModel() {
