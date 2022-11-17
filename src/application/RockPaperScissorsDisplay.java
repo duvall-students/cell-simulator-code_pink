@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -18,6 +19,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
+
+//@author Shannon Seignious
 public class RockPaperScissorsDisplay extends Application {
 
 	/* 
@@ -27,12 +30,14 @@ public class RockPaperScissorsDisplay extends Application {
 	private final int EXTRA_VERTICAL = 100; 	// GUI area allowance when making the scene width
 	private final int EXTRA_HORIZONTAL = 150; 	// GUI area allowance when making the scene width
 	private final int BLOCK_SIZE = 25;     		// size of each cell in pixels
-	private final int INITIAL_NUM_OF_ROWS = 18; // initial number of rows
-	private final int INITIAL_NUM_OF_COLS = 18; // initial number of rows
+
 
 	private Scene myScene;						// the container for the GUI
 	private boolean paused = false;	
 	private Button pauseButton;
+	
+	private int numOfRows;
+	private int numOfCols;
 
 	private Rectangle[][] mirrorModel;	// the Rectangle objects that will get updated and drawn.  It is 
 	// called "mirror" maze because there is one entry per square in 
@@ -45,14 +50,12 @@ public class RockPaperScissorsDisplay extends Application {
 			Color.rgb(0,0,0),		// edge cell color
 			Color.RED,				// rock cell color
 			Color.WHITE,			// paper cell color
-			Color.BLUE		// scissors cell color
+			Color.BLUE				// scissors cell color
 	};  		// the color of each of the states  
 
 	RockPaperScissors rps;
 	RockPaperScissorsDisplay rpsDisplay;
 	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
-
-	//private Rectangle [][] mirrorModel;
 
 	// Start of JavaFX Application
 	public void start(Stage stage) {
@@ -91,32 +94,45 @@ public class RockPaperScissorsDisplay extends Application {
 	private Scene setupScene () {
 		// Make three container 
 		Group modelDrawing = setupModel();
-		VBox userInputDimensions = setUpDimensionsTextField();
+		HBox userInputDimensions = setUpDimensionsTextField();
 		HBox controls = setupControlButtons();
 
 		VBox root = new VBox();
 		root.setAlignment(Pos.TOP_CENTER);
 		root.setSpacing(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
-		root.getChildren().addAll(modelDrawing,controls);
-		
+		root.getChildren().addAll(userInputDimensions, modelDrawing, controls);
 		Scene scene = new Scene(root, (rpsController.getColumns())*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
 				(rpsController.getRows())*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
 
 		return scene;
 	}
 
-	private VBox setUpDimensionsTextField() {
-		// Set up user input area
-		VBox dimensions = new VBox();
-		dimensions.setAlignment(Pos.TOP_CENTER);
 
-		TextField userInputArea = new TextField();
-		dimensions.getChildren().add(userInputArea);
+	private HBox setUpDimensionsTextField() {
+		// Set up user input area
+		Label userInputRowsLabel = new Label("Rows: ");
+		TextField userInputRowsArea = new TextField();
+		userInputRowsArea.setPromptText("Enter the number of rows.");
+		userInputRowsArea.setPrefColumnCount(15);
+		numOfRows = Integer.parseInt(userInputRowsArea.getText());
+		
+		Label userInputColsLabel = new Label("Columns: ");
+		TextField userInputColsArea = new TextField();
+		userInputColsArea.setPromptText("Enter the number of columns.");
+		userInputColsArea.setPrefColumnCount(15);
+		numOfCols = Integer.parseInt(userInputColsArea.getText());
+		
+		HBox dimensions = new HBox();
+		dimensions.setSpacing(10);
+		
+		dimensions.getChildren().addAll(userInputRowsLabel, userInputRowsArea, userInputColsLabel, userInputColsArea);
+		dimensions.setAlignment(Pos.TOP_CENTER);
 		return dimensions;
 	}
 
-	private HBox setupControlButtons(){
+
+	private HBox setupControlButtons() {
 		// Make the controls part
 		HBox controls = new HBox();
 		controls.setAlignment(Pos.BASELINE_CENTER);
@@ -146,13 +162,15 @@ public class RockPaperScissorsDisplay extends Application {
 	 * current state of that rectangle in the maze.  This 
 	 * method assumes the display maze matches the model maze
 	 */
-	/* public void redraw(){
-		for(int i = 0; i< mirrorMaze.length; i++){
-			for(int j =0; j < mirrorMaze[i].length; j++){
-				mirrorMaze[i][j].setFill(color[mazeController.getCellState(new Point(i,j))]);
+	public void redraw(){
+		for(int i = 0; i< mirrorModel.length; i++){
+			for(int j =0; j < mirrorModel[i].length; j++){
+				Point currentSquare = new Point(i,j);
+				rps.convertType(currentSquare);
+				mirrorModel[i][j].setFill(color[rpsController.getCellState(currentSquare)]);
 			}
 		}
-	} */
+	}
 	
 	/*
 	 * Toggle the pause button

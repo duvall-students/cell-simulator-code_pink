@@ -2,30 +2,31 @@ package application;
 
 import java.awt.Point;
 
-
-
 public class RockPaperScissorsController {
-	private final int NUM_ROWS =18; 
-	private final int NUM_COLUMNS = 18;
+	private final int INITIAL_NUM_OF_ROWS = 18; // initial number of rows
+	private final int INITIAL_NUM_OF_COLS = 18; // initial number of rows
+	
+	int numRows;
+	int numColumns;
 	
 	private RockPaperScissors rps;
 	
 	public RockPaperScissorsController(RockPaperScissorsDisplay rpsDisplay){
-		int numRows = NUM_ROWS;
-		int numColumns = NUM_COLUMNS;
+		numRows = INITIAL_NUM_OF_ROWS;
+		numColumns = INITIAL_NUM_OF_COLS;
 		rps = new RockPaperScissors(numRows, numColumns);
 	}
 	
 	public int getRows(){
-		return NUM_ROWS;
+		return numRows;
 	}
 	
 	public int getColumns(){
-		return NUM_COLUMNS;
+		return numColumns;
 	}
 	
 	public Point getMazeDimensions() {
-		return new Point(NUM_ROWS, NUM_COLUMNS);
+		return new Point(numRows, numColumns);
 	}
 	
 	public void newModel() {
@@ -35,33 +36,4 @@ public class RockPaperScissorsController {
 	public int getCellState(Point position) {
 		return rps.get(position);
 	}
-
-public class RockPaperScissorsController {
-	
-	private final int NUM_ROWS = 31; 
-	private final int NUM_COLUMNS = 41;
-	
-	//setting up grid
-	private RockPaperScissors rockPaperScissors;
-	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
-	
-	public RockPaperScissorsController(RockPaperScissorsDisplay view) {
-		int numRows = NUM_ROWS;
-		int numColumns = NUM_COLUMNS;
-		rockPaperScissors = new RockPaperScissors(numRows, numColumns);
-		rockPaperScissorsDisplay = view;
-	}
-	
-	public Point getGridDimensions() {
-		return new Point(NUM_ROWS, NUM_COLUMNS);
-	}
-
-	public int getNumRows() {
-		return NUM_ROWS;
-	}
-	
-	public int getNumCols() {
-		return NUM_COLUMNS;
-	}
-	
 }
