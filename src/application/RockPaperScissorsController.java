@@ -8,8 +8,8 @@ import java.awt.Point;
 
 public class RockPaperScissorsController {
 	
-	private final int NUM_ROWS = 31; 
-	private final int NUM_COLUMNS = 41;
+	private final int NUM_ROWS = 18; 
+	private final int NUM_COLUMNS = 18;
 	
 	//setting up grid
 	private RockPaperScissors rockPaperScissors;
@@ -32,6 +32,12 @@ public class RockPaperScissorsController {
 	
 	public int getNumCols() {
 		return NUM_COLUMNS;
+	}
+	public void newModel() {
+		rockPaperScissors.createModel(rockPaperScissors.getNumRows(), rockPaperScissors.getNumCols());
+	}
+	public int getCellState(Point position) {
+		return rockPaperScissors.get(position);
 	}
 	
 }
