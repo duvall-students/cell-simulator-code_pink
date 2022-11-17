@@ -20,7 +20,7 @@ import javafx.util.Duration;
 
 public class RockPaperScissorsDisplay extends Application {
 
-	/*
+	/* 
 	 * GUI settings
 	 */
 	private final int MILLISECOND_DELAY = 15;	// speed of animation
@@ -34,7 +34,7 @@ public class RockPaperScissorsDisplay extends Application {
 	private boolean paused = false;	
 	private Button pauseButton;
 
-//	private Rectangle[][] mirrorModel;	// the Rectangle objects that will get updated and drawn.  It is 
+	private Rectangle[][] mirrorModel;	// the Rectangle objects that will get updated and drawn.  It is 
 	// called "mirror" maze because there is one entry per square in 
 	// the maze.
 
@@ -140,6 +140,39 @@ public class RockPaperScissorsDisplay extends Application {
 		});
 		controls.getChildren().add(stepButton);
 		return controls;
+	}
+	/*
+	 * resets all the rectangle colors according to the 
+	 * current state of that rectangle in the maze.  This 
+	 * method assumes the display maze matches the model maze
+	 */
+	/* public void redraw(){
+		for(int i = 0; i< mirrorMaze.length; i++){
+			for(int j =0; j < mirrorMaze[i].length; j++){
+				mirrorMaze[i][j].setFill(color[mazeController.getCellState(new Point(i,j))]);
+			}
+		}
+	} */
+	
+	/*
+	 * Toggle the pause button
+	 */
+	public void pressPause(){
+		this.paused = !this.paused;
+		if(this.paused){
+			pauseButton.setText("Resume");
+		}
+		else{
+			pauseButton.setText("Pause");
+		}
+	}
+
+	/*
+	 * Pause the animation (regardless of current state of pause button)
+	 */
+	public void pauseIt(){
+		this.paused = true;
+		pauseButton.setText("Resume");
 	}
 	/*
 	 * Does a step in the search only if not paused.
