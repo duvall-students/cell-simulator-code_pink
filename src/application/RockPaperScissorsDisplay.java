@@ -35,6 +35,9 @@ public class RockPaperScissorsDisplay extends Application {
 	private Scene myScene;						// the container for the GUI
 	private boolean paused = false;	
 	private Button pauseButton;
+	
+	private int numOfRows;
+	private int numOfCols;
 
 	private Rectangle[][] mirrorModel;	// the Rectangle objects that will get updated and drawn.  It is 
 	// called "mirror" maze because there is one entry per square in 
@@ -53,8 +56,6 @@ public class RockPaperScissorsDisplay extends Application {
 	RockPaperScissors rps;
 	RockPaperScissorsDisplay rpsDisplay;
 	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
-
-	//private Rectangle [][] mirrorModel;
 
 	// Start of JavaFX Application
 	public void start(Stage stage) {
@@ -114,11 +115,13 @@ public class RockPaperScissorsDisplay extends Application {
 		TextField userInputRowsArea = new TextField();
 		userInputRowsArea.setPromptText("Enter the number of rows.");
 		userInputRowsArea.setPrefColumnCount(15);
+		numOfRows = Integer.parseInt(userInputRowsArea.getText());
 		
 		Label userInputColsLabel = new Label("Columns: ");
 		TextField userInputColsArea = new TextField();
 		userInputColsArea.setPromptText("Enter the number of columns.");
 		userInputColsArea.setPrefColumnCount(15);
+		numOfCols = Integer.parseInt(userInputColsArea.getText());
 		
 		HBox dimensions = new HBox();
 		dimensions.setSpacing(10);
@@ -127,10 +130,7 @@ public class RockPaperScissorsDisplay extends Application {
 		dimensions.setAlignment(Pos.TOP_CENTER);
 		return dimensions;
 	}
-	
-	private void setNumRows() {
-		
-	}
+
 
 	private HBox setupControlButtons() {
 		// Make the controls part
