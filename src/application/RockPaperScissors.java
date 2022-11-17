@@ -1,24 +1,33 @@
 package application;
 
 import java.awt.Point;
+import java.util.HashMap; 
 
+// @author Maggie Bickerstaffe 
 public class RockPaperScissors {
 	
 	// Possible states of squares that make up a maze
 	public static final int BORDER = 0;	
-	public static final int ROCK = 0;
-	public static final int PAPER = 0;	
-	public static final int SCISSORS = 0;	
+	public static final int ROCK = 1;
+	public static final int PAPER = 2;	
+	public static final int SCISSORS = 3;
+	public int threshold = 3; 
 	
 	// squares that make up the maze
 	private int[][] rockPaperScissors;
 	
-	private RockPaperScissorsController rpcController;
+	private HashMap<String, String> enemiesMap = new HashMap<String, String>() {{
+	    put("ROCK", "PAPER");
+	    put("PAPER", "SCISSORS");
+	    put("SCISSORS", "ROCK");
+	}};
+	
+	//private RockPaperScissorsController rpcController;
 	
 	// constructor method 
 	public RockPaperScissors(int rows, int columns){
 		assert(rows > 0 && columns > 0);
-		//createRockPaperScissors(rows, columns);
+		createModel(rows, columns);
 	}
 
 	// get the number of rows from the user
@@ -75,28 +84,94 @@ public class RockPaperScissors {
 		rockPaperScissors[square.x][square.y] = SCISSORS;
 	}
 	
+	public void iterateThroughModel(int start, int end, int state, int i) {
+		for (int j = start; j < end; j++) {
+			rockPaperScissors[j][i] = state;
+		}
+	}
 	// resets the maze to its original state
-	public void reColorMaze(){
-		assert(rockPaperScissors != null);
+	public void createModel(int rows, int cols){
+		assert(rows > 0 && cols > 0);
+		rockPaperScissors = new int[rows][cols];
+		int i,j;
 		// iterate through columns
-		for(int i = 0; i< rockPaperScissors[i].length; i++){
-			// iterate through rows
-			for(int j =0; j < rockPaperScissors.length/2; j++){
-				rockPaperScissors[j][i] = ROCK;
-			}
-			for(int j = rockPaperScissors.length/2; j < rockPaperScissors.length; j++){
-				rockPaperScissors[j][i] = SCISSORS;
-			}
+		for(i = 1; i< rockPaperScissors.length/2; i++){
+			iterateThroughModel(1, rockPaperScissors[i].length-1, ROCK, i);
 		}
+		for(i = rockPaperScissors.length/2; i< rockPaperScissors.length-1; i++){
+			iterateThroughModel(1, rockPaperScissors[i].length-1, SCISSORS, i);
+		}
+
 		// now that the grid is half rock/ half scissors, we can add in the paper	
-		int i = 0;
-		for(i = rockPaperScissors[i].length/2; i< rockPaperScissors[i].length; i++){
-			// iterate through rows
-			int pyramid = 2;
-			for(int j = rockPaperScissors.length/2; j > 0; j--){
-		//		if 
+		int height = rockPaperScissors[1].length;
+		
+		int startLeft = rockPaperScissors.length/2 - 1;
+		int startRight = rockPaperScissors.length/2 + 1;
+		
+
+		for(i = 1; i < height-1; i++){
+			if (i > height*3/4) {
+				for(j = 1; j<rockPaperScissors.length-1; j++) {
+					rockPaperScissors[i][j] = PAPER;
+				}
+			}
+			if (i < height*3/4 + 1 && i > height/2) {
+				for(j = startLeft; j<rockPaperScissors.length/2; j++) {
+					rockPaperScissors[i][j] = PAPER;
+				}
+				startLeft -= 2;
 				
+				for(j = rockPaperScissors.length/2; j<startRight; j++) {
+					rockPaperScissors[i][j] = PAPER;
+				}
+				startRight += 2;
 			}
 		}
+
+	}
+	
+	// converts type if winning neighbors are over threshold
+	public void convertType(Point square) {
+		assert(validPoint(square));
+		HashMap<String, Integer> neighbors = (getNeighbors(square));
+		// if (neighbors.get(enemiesMap.get(rockPaperScissors[square.x][square.y])) >= threshold)
+		if (rockPaperScissors[square.x][square.y] == ROCK && neighbors.get(enemiesMap.get("ROCK")) >= threshold) {
+			markPathAsRock(square);
+		}	
+		else if (rockPaperScissors[square.x][square.y] == PAPER && neighbors.get(enemiesMap.get("PAPER")) >= threshold) {
+			markPathAsPaper(square);
+		}
+		else if (rockPaperScissors[square.x][square.y] == SCISSORS && neighbors.get(enemiesMap.get("SCISSORS")) >= threshold) {
+			markPathAsRock(square);
+		}
+	}
+	
+	
+	// returns a map with the count of each neighbor type  
+	public HashMap<String, Integer> getNeighbors(Point square) {
+		HashMap<String, Integer> neighbors = new HashMap<String, Integer>();
+		int paperNeighbors = 0;
+		int rockNeighbors = 0; 
+		int scissorsNeighbors = 0;
+		assert(validPoint(square));
+		for (int j = square.x-1; j < square.x+1; j++) {
+			for ( int i = square.y-1; i<square.y+1; i++) {
+				if (rockPaperScissors[j][i] == PAPER) {
+					paperNeighbors += 1;
+				}
+				else if (rockPaperScissors[j][i] == ROCK) {
+					rockNeighbors += 1;
+				}
+				else if (rockPaperScissors[j][i] == SCISSORS) {
+					scissorsNeighbors += 1;
+				}
+			}
+		}
+		
+		neighbors.put("Papers", paperNeighbors);
+		neighbors.put("Rocks", rockNeighbors);
+		neighbors.put("Scissors", scissorsNeighbors);	
+		
+		return neighbors;
 	}
 }

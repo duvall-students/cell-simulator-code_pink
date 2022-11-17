@@ -7,20 +7,20 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 public class RockPaperScissorsDisplay extends Application {
 
-	/*
+	/* 
 	 * GUI settings
 	 */
 	private final int MILLISECOND_DELAY = 15;	// speed of animation
@@ -34,7 +34,7 @@ public class RockPaperScissorsDisplay extends Application {
 	private boolean paused = false;	
 	private Button pauseButton;
 
-	private Rectangle[][] mirrorSimulation;	// the Rectangle objects that will get updated and drawn.  It is 
+	private Rectangle[][] mirrorModel;	// the Rectangle objects that will get updated and drawn.  It is 
 	// called "mirror" maze because there is one entry per square in 
 	// the maze.
 
@@ -45,22 +45,23 @@ public class RockPaperScissorsDisplay extends Application {
 			Color.rgb(0,0,0),		// edge cell color
 			Color.RED,				// rock cell color
 			Color.WHITE,			// paper cell color
-			Color.LIGHTSKYBLUE		// scissors cell color
+			Color.BLUE		// scissors cell color
 	};  		// the color of each of the states  
 
 	RockPaperScissors rps;
-	RockPaperScissorsController rpsController;
+	RockPaperScissorsDisplay rpsDisplay;
+	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
 
-
+	//private Rectangle [][] mirrorModel;
 
 	// Start of JavaFX Application
 	public void start(Stage stage) {
-		rpsController = new RockPaperScissorsController(this);
+		//rpsController = new RockPaperScissorsController(this);
 
 		// Initializing the gui
 		myScene = setupScene();
 		stage.setScene(myScene);
-		stage.setTitle("aMAZEing");
+		stage.setTitle("RockPaperScissors");
 		stage.show();
 
 		// Makes the animation happen.  Will call "step" method repeatedly.
@@ -71,10 +72,25 @@ public class RockPaperScissorsDisplay extends Application {
 		animation.play();	
 	}
 
+	private Group setupModel(){
+		Group drawing = new Group();
+		Rectangle[][] mirrorModel = new Rectangle[(rpsController.getRows())][(rpsController.getColumns())];
+		for(int i = 0; i< (rpsController.getRows()); i++){
+			for(int j =0; j < (rpsController.getColumns()); j++){
+				Rectangle rect = new Rectangle(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+				rect.setFill(color[rpsController.getCellState(new Point(i,j))]);
+				mirrorModel[i][j] = rect;
+				drawing.getChildren().add(rect);
+			}	
+		}
+		
+		return drawing;
+	}
+	
 	// Create the scene - Controls and Simulation areas
 	private Scene setupScene () {
 		// Make three container 
-		Group mazeDrawing = setupSimulation();
+		Group modelDrawing = setupModel();
 		VBox userInputDimensions = setUpDimensionsTextField();
 		HBox controls = setupControlButtons();
 
@@ -82,41 +98,12 @@ public class RockPaperScissorsDisplay extends Application {
 		root.setAlignment(Pos.TOP_CENTER);
 		root.setSpacing(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
-		root.getChildren().addAll(mazeDrawing,controls);
-
-		Scene scene = new Scene(root, INITIAL_NUM_OF_COLS*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
-				INITIAL_NUM_OF_ROWS*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
+		root.getChildren().addAll(modelDrawing,controls);
+		
+		Scene scene = new Scene(root, (rpsController.getColumns())*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
+				(rpsController.getRows())*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
 
 		return scene;
-	}
-
-
-	/*
-	 * Setup the maze part for drawing. In particular,
-	 * make the mirrorMaze.
-	 */
-	private Group setupSimulation(){
-		Group drawing = new Group();
-		mirrorSimulation = new Rectangle[INITIAL_NUM_OF_ROWS][INITIAL_NUM_OF_COLS];
-		for(int i = 0; i< rps.getNumRows(); i++){
-			for(int j =0; j < rps.getNumCols(); j++){
-				Rectangle rect = new Rectangle(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-				rect.setFill(color[rpsController.getCellState(new Point(i,j))]);
-				//rect.setFill(Color.RED);
-				mirrorSimulation[i][j] = rect;
-				drawing.getChildren().add(rect);
-			}	
-		}
-		return drawing;
-	}
-
-	/*
-	 * Does a step in the search only if not paused.
-	 */
-	public void step(double elapsedTime){
-		if(!paused) {
-			// rpsController.doOneStep(elapsedTime);
-		}
 	}
 
 	private VBox setUpDimensionsTextField() {
@@ -154,7 +141,6 @@ public class RockPaperScissorsDisplay extends Application {
 		controls.getChildren().add(stepButton);
 		return controls;
 	}
-	
 	/*
 	 * resets all the rectangle colors according to the 
 	 * current state of that rectangle in the maze.  This 
@@ -187,6 +173,14 @@ public class RockPaperScissorsDisplay extends Application {
 	public void pauseIt(){
 		this.paused = true;
 		pauseButton.setText("Resume");
+	}
+	/*
+	 * Does a step in the search only if not paused.
+	 */
+	public void step(double elapsedTime){
+		if(!paused) {
+			// rpsController.doOneStep(elapsedTime);
+		}
 	}
 	
 	public static void main(String[] args) {
