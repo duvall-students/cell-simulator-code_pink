@@ -2,37 +2,42 @@ package application;
 
 import java.awt.Point;
 
+/*
+ * @author Milli kearse
+ */
 
 public class RockPaperScissorsController {
-	private final int NUM_ROWS =18; 
+	
+	private final int NUM_ROWS = 18; 
 	private final int NUM_COLUMNS = 18;
 	
-	private RockPaperScissors rps;
+	//setting up grid
+	private RockPaperScissors rockPaperScissors;
+	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
 	
-	public RockPaperScissorsController(RockPaperScissorsDisplay rpsDisplay){
+	public RockPaperScissorsController(RockPaperScissorsDisplay view) {
 		int numRows = NUM_ROWS;
 		int numColumns = NUM_COLUMNS;
-		rps = new RockPaperScissors(numRows, numColumns);
+		rockPaperScissors = new RockPaperScissors(numRows, numColumns);
+		rockPaperScissorsDisplay = view;
 	}
 	
-	public int getRows(){
+	public Point getGridDimensions() {
+		return new Point(NUM_ROWS, NUM_COLUMNS);
+	}
+
+	public int getNumRows() {
 		return NUM_ROWS;
 	}
 	
-	public int getColumns(){
+	public int getNumCols() {
 		return NUM_COLUMNS;
 	}
-	
-	public Point getMazeDimensions() {
-		return new Point(NUM_ROWS, NUM_COLUMNS);
-	}
-	
 	public void newModel() {
-		rps.createModel(rps.getNumRows(),rps.getNumCols());
+		rockPaperScissors.createModel(rockPaperScissors.getNumRows(), rockPaperScissors.getNumCols());
+	}
+	public int getCellState(Point position) {
+		return rockPaperScissors.get(position);
 	}
 	
-	public int getCellState(Point position) {
-		return rps.get(position);
-	}
-
 }

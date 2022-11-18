@@ -89,13 +89,14 @@ public class RockPaperScissors {
 			rockPaperScissors[j][i] = state;
 		}
 	}
+	
 	// resets the maze to its original state
 	public void createModel(int rows, int cols){
 		assert(rows > 0 && cols > 0);
 		rockPaperScissors = new int[rows][cols];
 		int i,j;
 		// iterate through columns
-		for(i = 1; i< rockPaperScissors.length/2; i++){
+		for(i = 1; i < rockPaperScissors.length/2; i++){
 			iterateThroughModel(1, rockPaperScissors[i].length-1, ROCK, i);
 		}
 		for(i = rockPaperScissors.length/2; i< rockPaperScissors.length-1; i++){
