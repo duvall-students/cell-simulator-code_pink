@@ -3,6 +3,7 @@ package application;
 import static org.junit.Assert.*;
 
 import java.awt.Point;
+import java.util.HashMap;
 
 import org.junit.Test;
 
@@ -11,7 +12,9 @@ import org.junit.Test;
 public class ModelTestCase {
 	
 	RockPaperScissors rps = new RockPaperScissors(18, 18);
-
+	RockPaperScissorsDisplay rpsDisplay = new RockPaperScissorsDisplay();
+	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
+	
 	@Test
 	public void testGetRows() {
 		int actual = rps.getNumRows();
@@ -67,6 +70,12 @@ public class ModelTestCase {
 	}
 	
 	@Test
+	public void testGetForScissors(){
+		Point square = new Point (9,10);
+		assertEquals(3,rps.get(square));
+	}
+	
+	@Test
 	public void testMarkPathAsRock(){
 		Point square = new Point (1,1);
 		rps.markPathAsRock(square);
@@ -89,6 +98,28 @@ public class ModelTestCase {
 		int actual = rps.get(square);
 		assertEquals(3, actual);
 	}
+	
+	@Test 
+	public void testgetNeighbors() {
+		Point p = new Point (13, 1);
+		HashMap<String, Integer> neighbors = rps.getNeighbors(p);
+		String actual = String.valueOf(neighbors);
+		assertEquals("{ROCK=3, PAPER=3, SCISSORS=0}", actual);
+	}
+	
+	@Test
+	public void testgetNeighborsMany() {
+		Point p = new Point (10, 9);
+		HashMap<String, Integer> neighbors = rps.getNeighbors(p);
+		String actual = String.valueOf(neighbors);
+		assertEquals("{ROCK=1, PAPER=5, SCISSORS=3}", actual);
+	}
 
-
+	@Test
+	public void testConvertType(){
+		Point square = new Point (10, 9);
+		rps.convertType(square);
+		int actual = rps.get(square);
+		assertEquals(3, actual);
+	}
 }

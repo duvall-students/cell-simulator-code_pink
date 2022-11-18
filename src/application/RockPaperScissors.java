@@ -134,12 +134,13 @@ public class RockPaperScissors {
 	public void convertType(Point square) {
 		assert(validPoint(square));
 		HashMap<String, Integer> neighbors = (getNeighbors(square));
+		
 		// if (neighbors.get(enemiesMap.get(rockPaperScissors[square.x][square.y])) >= threshold)
 		if (rockPaperScissors[square.x][square.y] == ROCK && neighbors.get(enemiesMap.get("ROCK")) >= threshold) {
-			markPathAsRock(square);
+			markPathAsPaper(square);
 		}	
 		else if (rockPaperScissors[square.x][square.y] == PAPER && neighbors.get(enemiesMap.get("PAPER")) >= threshold) {
-			markPathAsPaper(square);
+			markPathAsScissors(square);
 		}
 		else if (rockPaperScissors[square.x][square.y] == SCISSORS && neighbors.get(enemiesMap.get("SCISSORS")) >= threshold) {
 			markPathAsRock(square);
@@ -154,8 +155,8 @@ public class RockPaperScissors {
 		int rockNeighbors = 0; 
 		int scissorsNeighbors = 0;
 		assert(validPoint(square));
-		for (int j = square.x-1; j < square.x+1; j++) {
-			for ( int i = square.y-1; i<square.y+1; i++) {
+		for (int j = square.x-1; j <= square.x+1; j++) {
+			for ( int i = square.y-1; i<=square.y+1; i++) {
 				if (rockPaperScissors[j][i] == PAPER) {
 					paperNeighbors += 1;
 				}
@@ -168,9 +169,9 @@ public class RockPaperScissors {
 			}
 		}
 		
-		neighbors.put("Papers", paperNeighbors);
-		neighbors.put("Rocks", rockNeighbors);
-		neighbors.put("Scissors", scissorsNeighbors);	
+		neighbors.put("PAPER", paperNeighbors);
+		neighbors.put("ROCK", rockNeighbors);
+		neighbors.put("SCISSORS", scissorsNeighbors);	
 		
 		return neighbors;
 	}
