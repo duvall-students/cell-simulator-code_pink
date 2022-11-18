@@ -36,8 +36,6 @@ public class RockPaperScissorsDisplay extends Application {
 	private boolean paused = false;	
 	private Button pauseButton;
 	
-	private int numOfRows;
-	private int numOfCols;
 
 	private Rectangle[][] mirrorModel;	// the Rectangle objects that will get updated and drawn.  It is 
 	// called "mirror" maze because there is one entry per square in 
@@ -57,6 +55,9 @@ public class RockPaperScissorsDisplay extends Application {
 	RockPaperScissorsDisplay rpsDisplay;
 	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
 
+	
+	private int numOfRows = rpsController.getNumRows();
+	private int numOfCols = rpsController.getNumCols();
 	// Start of JavaFX Application
 	public void start(Stage stage) {
 		//rpsController = new RockPaperScissorsController(this);
@@ -75,11 +76,11 @@ public class RockPaperScissorsDisplay extends Application {
 		animation.play();	
 	}
 
-	private Group setupModel(){
+	private Group setupModel() {
 		Group drawing = new Group();
-		Rectangle[][] mirrorModel = new Rectangle[(rpsController.getNumRows())][(rpsController.getNumCols())];
-		for(int i = 0; i< (rpsController.getNumRows()); i++){
-			for(int j =0; j < (rpsController.getNumCols()); j++){
+		Rectangle[][] mirrorModel = new Rectangle[numOfRows][numOfCols];
+		for(int i = 0; i< (numOfRows); i++){
+			for(int j =0; j < (numOfCols); j++){
 				Rectangle rect = new Rectangle(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 				rect.setFill(color[rpsController.getCellState(new Point(i,j))]);
 				mirrorModel[i][j] = rect;
@@ -91,7 +92,7 @@ public class RockPaperScissorsDisplay extends Application {
 	}
 	
 	// Create the scene - Controls and Simulation areas
-	private Scene setupScene () {
+	private Scene setupScene() {
 		// Make three container 
 		Group modelDrawing = setupModel();
 		HBox userInputDimensions = setUpDimensionsTextField();
@@ -102,26 +103,29 @@ public class RockPaperScissorsDisplay extends Application {
 		root.setSpacing(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
 		root.getChildren().addAll(userInputDimensions, modelDrawing, controls);
-		Scene scene = new Scene(root, (rpsController.getNumCols())*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
-				(rpsController.getNumRows())*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
+
+		Scene scene = new Scene(root, (numOfCols)*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
+				(numOfRows)*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
 
 		return scene;
 	}
 
 	
+	TextField userInputRowsArea;
+	TextField userInputColsArea;
+
 	private HBox setUpDimensionsTextField() {
 		// Set up user input area
 		Label userInputRowsLabel = new Label("Rows: ");
-		TextField userInputRowsArea = new TextField();
+		userInputRowsArea = new TextField();
 		userInputRowsArea.setPromptText("Enter the number of rows.");
 		userInputRowsArea.setPrefColumnCount(15);
-		numOfRows = Integer.parseInt(userInputRowsArea.getText());
 		
 		Label userInputColsLabel = new Label("Columns: ");
-		TextField userInputColsArea = new TextField();
+		userInputColsArea = new TextField();
 		userInputColsArea.setPromptText("Enter the number of columns.");
 		userInputColsArea.setPrefColumnCount(15);
-		numOfCols = Integer.parseInt(userInputColsArea.getText());
+		
 		
 		HBox dimensions = new HBox();
 		dimensions.setSpacing(10);
@@ -130,7 +134,7 @@ public class RockPaperScissorsDisplay extends Application {
 		dimensions.setAlignment(Pos.TOP_CENTER);
 		return dimensions;
 	}
-	
+
 
 	private HBox setupControlButtons() {
 		// Make the controls part
@@ -140,10 +144,20 @@ public class RockPaperScissorsDisplay extends Application {
 
 		Button newSimulationButton = new Button("New Simulation");
 		newSimulationButton.setOnAction(value ->  {
-			// rpsController.newSimulation();
+			String inputRows = userInputRowsArea.getText();
+			numOfRows = Integer.parseInt(inputRows);
+			String inputCols = userInputColsArea.getText();
+			numOfCols = Integer.parseInt(inputCols);
+			// rpsController.newSimulation(numOfRows, numOfCols);
 		});
 		controls.getChildren().add(newSimulationButton);
-
+		
+		Button startSimulationButton = new Button("Start!");
+		startSimulationButton.setOnAction(value -> {
+			// rpsController.startSimulation();
+		});
+		controls.getChildren().add(startSimulationButton);
+		
 		pauseButton = new Button("Pause");
 		pauseButton.setOnAction(value ->  {
 			// rpsController();
