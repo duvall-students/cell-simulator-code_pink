@@ -94,7 +94,7 @@ public class RockPaperScissorsDisplay extends Application {
 	private Scene setupScene () {
 		// Make three container 
 		Group modelDrawing = setupModel();
-		//HBox userInputDimensions = setUpDimensionsTextField();
+		HBox userInputDimensions = setUpDimensionsTextField();
 		HBox controls = setupControlButtons();
 
 		VBox root = new VBox();
@@ -108,7 +108,7 @@ public class RockPaperScissorsDisplay extends Application {
 		return scene;
 	}
 
-	/*
+	
 	private HBox setUpDimensionsTextField() {
 		// Set up user input area
 		Label userInputRowsLabel = new Label("Rows: ");
@@ -130,7 +130,7 @@ public class RockPaperScissorsDisplay extends Application {
 		dimensions.setAlignment(Pos.TOP_CENTER);
 		return dimensions;
 	}
-	*/
+	
 
 	private HBox setupControlButtons() {
 		// Make the controls part

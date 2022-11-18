@@ -8,7 +8,7 @@ import java.util.HashMap;
 import org.junit.Test;
 
 
-//@author Maggie Bickerstaffe ////
+//@author Maggie Bickerstaffe //
 public class ModelTestCase {
 	
 	RockPaperScissors rps = new RockPaperScissors(18, 18);

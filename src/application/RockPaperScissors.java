@@ -3,7 +3,7 @@ package application;
 import java.awt.Point;
 import java.util.HashMap; 
 
-// @author Maggie Bickerstaffe ////
+// @author Maggie Bickerstaffe //
 public class RockPaperScissors {
 	
 	// Possible states of squares that make up a maze
