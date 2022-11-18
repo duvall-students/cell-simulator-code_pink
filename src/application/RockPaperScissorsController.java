@@ -41,9 +41,17 @@ public class RockPaperScissorsController {
 		rockPaperScissors.createModel(rockPaperScissors.getNumRows(), rockPaperScissors.getNumCols());
 		rockPaperScissorsDisplay.redraw();
 	}
+	
 	public int getCellState(Point position) {
 		return rockPaperScissors.get(position);
 	}
 	
+	// Does a step regardless of pause status
+	public void doOneStep(double elapsedTime){
+		if (rockPaperScissors != null) {
+			//rockPaperScissors.step();
+		}
+		rockPaperScissorsDisplay.redraw();
+	}
 	
 }
