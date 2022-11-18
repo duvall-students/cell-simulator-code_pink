@@ -56,8 +56,8 @@ public class RockPaperScissorsDisplay extends Application {
 	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
 
 	
-	private int numOfRows = rpsController.getRows();
-	private int numOfCols = rpsController.getColumns();
+	private int numOfRows = rpsController.getNumRows();
+	private int numOfCols = rpsController.getNumCols();
 	// Start of JavaFX Application
 	public void start(Stage stage) {
 		//rpsController = new RockPaperScissorsController(this);
@@ -103,6 +103,7 @@ public class RockPaperScissorsDisplay extends Application {
 		root.setSpacing(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
 		root.getChildren().addAll(userInputDimensions, modelDrawing, controls);
+
 		Scene scene = new Scene(root, (numOfCols)*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
 				(numOfRows)*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
 
