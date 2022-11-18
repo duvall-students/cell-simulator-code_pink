@@ -77,9 +77,9 @@ public class RockPaperScissorsDisplay extends Application {
 
 	private Group setupModel(){
 		Group drawing = new Group();
-		Rectangle[][] mirrorModel = new Rectangle[(rpsController.getRows())][(rpsController.getColumns())];
-		for(int i = 0; i< (rpsController.getRows()); i++){
-			for(int j =0; j < (rpsController.getColumns()); j++){
+		Rectangle[][] mirrorModel = new Rectangle[(rpsController.getNumRows())][(rpsController.getNumCols())];
+		for(int i = 0; i< (rpsController.getNumRows()); i++){
+			for(int j =0; j < (rpsController.getNumCols()); j++){
 				Rectangle rect = new Rectangle(j*BLOCK_SIZE, i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
 				rect.setFill(color[rpsController.getCellState(new Point(i,j))]);
 				mirrorModel[i][j] = rect;
@@ -102,8 +102,8 @@ public class RockPaperScissorsDisplay extends Application {
 		root.setSpacing(10);
 		root.setPadding(new Insets(10, 10, 10, 10));
 		root.getChildren().addAll(userInputDimensions, modelDrawing, controls);
-		Scene scene = new Scene(root, (rpsController.getColumns())*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
-				(rpsController.getRows())*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
+		Scene scene = new Scene(root, (rpsController.getNumCols())*BLOCK_SIZE+ EXTRA_HORIZONTAL, 
+				(rpsController.getNumRows())*BLOCK_SIZE + EXTRA_VERTICAL, Color.ANTIQUEWHITE);
 
 		return scene;
 	}
