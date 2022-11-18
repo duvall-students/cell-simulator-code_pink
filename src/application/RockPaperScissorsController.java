@@ -1,6 +1,8 @@
 package application;
 
 import java.awt.Point;
+import java.util.Collection;
+import java.util.Stack;
 
 /*
  * @author Milli kearse
@@ -49,9 +51,40 @@ public class RockPaperScissorsController {
 	// Does a step regardless of pause status
 	public void doOneStep(double elapsedTime){
 		if (rockPaperScissors != null) {
-			//rockPaperScissors.step();
+			step();
 		}
 		rockPaperScissorsDisplay.redraw();
+	}
+	
+	/*public boolean step(){
+		// Don't keep computing after goal is reached or determined impossible.
+		if(rockPaperScissors == null){
+			return false;
+		}
+		// Find possible next steps
+		//Collection<Point> neighbors = getNeighbors();
+		rockPaperScissors.getNeighbors(Point p);
+		
+		// Choose one to be a part of the path
+		Point next = chooseNeighbor(neighbors);
+		// mark the next step
+		if(next!=null){
+			maze.markPath(next);
+			recordLink(next);
+		}
+		// if no next step is found
+		else{	
+			maze.markVisited(current);
+			Stack<Point> stack = (Stack<Point>)data;
+			stack.pop();
+		}
+		resetCurrent();
+		checkSearchOver();
+		return searchResult;	
+	}*/
+	
+	public boolean step() {
+		return false;
 	}
 	
 }
