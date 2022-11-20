@@ -39,8 +39,8 @@ public class RockPaperScissorsController {
 	}
 	
 	//Re-create the grid from scratch.
-	public void newModel() {
-		rockPaperScissors.createModel(rockPaperScissors.getNumRows(), rockPaperScissors.getNumCols());
+	public void newModel(int rows, int cols) {
+		rockPaperScissors.createModel(rows, cols);
 		rockPaperScissorsDisplay.redraw();
 	}
 	
@@ -53,7 +53,7 @@ public class RockPaperScissorsController {
 		if (rockPaperScissors != null) {
 			step();
 		}
-		rockPaperScissorsDisplay.redraw();
+		//rockPaperScissorsDisplay.redraw();
 	}
 	
 	/*public boolean step(){
@@ -83,8 +83,8 @@ public class RockPaperScissorsController {
 		return searchResult;	
 	}*/
 	
-	public boolean step() {
-		return false;
+	public void step() {
+		rockPaperScissorsDisplay.redraw();
 	}
 	
 }
