@@ -83,8 +83,8 @@ public class RockPaperScissorsController {
 		return searchResult;	
 	}*/
 	
-	public boolean step() {
-		return false;
+	public void step() {
+		rockPaperScissorsDisplay.redraw();
 	}
 	
 }
