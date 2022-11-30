@@ -14,14 +14,14 @@ public class RockPaperScissorsController {
 	private final int INITIAL_NUM_ROWS = 18; 
 	private final int INITIAL_NUM_COLUMNS = 18;
 	
-	
-	
 	private RockPaperScissors rockPaperScissors;
 	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
 	
-	public RockPaperScissorsController(RockPaperScissorsDisplay view) {
-		int numRows = INITIAL_NUM_ROWS;
-		int numColumns = INITIAL_NUM_COLUMNS;
+	public RockPaperScissorsController(int rows, int cols, RockPaperScissorsDisplay view) {
+		//int numRows = INITIAL_NUM_ROWS;
+		//int numColumns = INITIAL_NUM_COLUMNS;
+		int numRows = rows;
+		int numColumns = cols;
 		rockPaperScissors = new RockPaperScissors(numRows, numColumns);
 		rockPaperScissorsDisplay = view;
 	}
@@ -55,33 +55,6 @@ public class RockPaperScissorsController {
 		}
 		rockPaperScissorsDisplay.redraw();
 	}
-	
-	/*public boolean step(){
-		// Don't keep computing after goal is reached or determined impossible.
-		if(rockPaperScissors == null){
-			return false;
-		}
-		// Find possible next steps
-		//Collection<Point> neighbors = getNeighbors();
-		rockPaperScissors.getNeighbors(Point p);
-		
-		// Choose one to be a part of the path
-		Point next = chooseNeighbor(neighbors);
-		// mark the next step
-		if(next!=null){
-			maze.markPath(next);
-			recordLink(next);
-		}
-		// if no next step is found
-		else{	
-			maze.markVisited(current);
-			Stack<Point> stack = (Stack<Point>)data;
-			stack.pop();
-		}
-		resetCurrent();
-		checkSearchOver();
-		return searchResult;	
-	}*/
 	
 	public void step() {
 		rockPaperScissorsDisplay.redraw();
