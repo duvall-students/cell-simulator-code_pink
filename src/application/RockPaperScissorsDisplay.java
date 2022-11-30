@@ -1,7 +1,6 @@
 package application;
 
 import java.awt.Point;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -53,7 +52,7 @@ public class RockPaperScissorsDisplay extends Application {
 
 	RockPaperScissors rps;
 	RockPaperScissorsDisplay rpsDisplay;
-	RockPaperScissorsController rpsController = new RockPaperScissorsController(rpsDisplay);
+	RockPaperScissorsController rpsController = new RockPaperScissorsController(0, 0, rpsDisplay);
 
 	
 	private int numOfRows = rpsController.getNumRows();
@@ -148,7 +147,7 @@ public class RockPaperScissorsDisplay extends Application {
 			numOfRows = Integer.parseInt(inputRows);
 			String inputCols = userInputColsArea.getText();
 			numOfCols = Integer.parseInt(inputCols);
-			rpsController.newSimulation(numOfRows, numOfCols);
+			rpsController.newModel(numOfRows, numOfCols);
 		});
 		controls.getChildren().add(newSimulationButton);
 		
