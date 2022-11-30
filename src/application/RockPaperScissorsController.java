@@ -2,6 +2,8 @@ package application;
 
 import java.awt.Point;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /*
@@ -17,11 +19,14 @@ public class RockPaperScissorsController {
 	private RockPaperScissors rockPaperScissors;
 	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
 	
+	private Point start;
+	
 	public RockPaperScissorsController(int rows, int cols, RockPaperScissorsDisplay view) {
 		//int numRows = INITIAL_NUM_ROWS;
 		//int numColumns = INITIAL_NUM_COLUMNS;
 		int numRows = rows;
 		int numColumns = cols;
+		start = new Point(1,1);
 		rockPaperScissors = new RockPaperScissors(numRows, numColumns);
 		rockPaperScissorsDisplay = view;
 	}
@@ -53,11 +58,22 @@ public class RockPaperScissorsController {
 		if (rockPaperScissors != null) {
 			step();
 		}
-		//rockPaperScissorsDisplay.redraw();
-	}
-	
-	public void step() {
 		rockPaperScissorsDisplay.redraw();
 	}
 	
+	public void step() {
+		HashMap<String, Integer> neighbors = rockPaperScissors.getNeighbors(start);
+		for (Map.Entry<String, Integer> mapElement: neighbors.entrySet()) {
+			String key = mapElement.getKey();
+			int value = mapElement.getValue();
+			rockPaperScissors.convertType(start);
+			
+			System.out.println(key+" : "+value);
+		}
+		
+	}
+	
+	public void startSimulation() {
+		step();
+	}
 }

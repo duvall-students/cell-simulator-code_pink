@@ -10,7 +10,7 @@ public class ControllerTestCase {
 	
 	RockPaperScissors rps = new RockPaperScissors(18, 18);
 	RockPaperScissorsDisplay rpsd = new RockPaperScissorsDisplay();
-	RockPaperScissorsController rpsc = new RockPaperScissorsController(rpsd);
+	RockPaperScissorsController rpsc = new RockPaperScissorsController(rps.getNumRows(), rps.getNumCols(), rpsd);
 	
 	@Test
 	public void testGetGridDimensions() {
