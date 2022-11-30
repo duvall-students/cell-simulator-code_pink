@@ -12,13 +12,14 @@ import java.util.Stack;
 
 public class RockPaperScissorsController {
 	
-	//setting up grid
+	//setting up initial grid
 	private final int INITIAL_NUM_ROWS = 18; 
 	private final int INITIAL_NUM_COLUMNS = 18;
 	
 	private RockPaperScissors rockPaperScissors;
 	private RockPaperScissorsDisplay rockPaperScissorsDisplay;
 	
+	//where to look
 	private Point start;
 	
 	public RockPaperScissorsController(int rows, int cols, RockPaperScissorsDisplay view) {
@@ -26,7 +27,7 @@ public class RockPaperScissorsController {
 		//int numColumns = INITIAL_NUM_COLUMNS;
 		int numRows = rows;
 		int numColumns = cols;
-		start = new Point(1,1);
+		start = new Point(rows/2,cols/2);
 		rockPaperScissors = new RockPaperScissors(numRows, numColumns);
 		rockPaperScissorsDisplay = view;
 	}
@@ -63,13 +64,15 @@ public class RockPaperScissorsController {
 	
 	public void step() {
 		HashMap<String, Integer> neighbors = rockPaperScissors.getNeighbors(start);
-		for (Map.Entry<String, Integer> mapElement: neighbors.entrySet()) {
+		rockPaperScissors.createModel(getNumRows(), getNumRows());
+		rockPaperScissors.convertType(start);
+		/*for (Map.Entry<String, Integer> mapElement: neighbors.entrySet()) {
 			String key = mapElement.getKey();
 			int value = mapElement.getValue();
 			rockPaperScissors.convertType(start);
 			
 			System.out.println(key+" : "+value);
-		}
+		}*/
 		
 	}
 	
