@@ -147,25 +147,25 @@ public class RockPaperScissorsDisplay extends Application {
 			numOfRows = Integer.parseInt(inputRows);
 			String inputCols = userInputColsArea.getText();
 			numOfCols = Integer.parseInt(inputCols);
-			// rpsController.newSimulation(numOfRows, numOfCols);
+			rpsController.newSimulation(numOfRows, numOfCols);
 		});
 		controls.getChildren().add(newSimulationButton);
 		
 		Button startSimulationButton = new Button("Start!");
 		startSimulationButton.setOnAction(value -> {
-			// rpsController.startSimulation();
+			rpsController.startSimulation();
 		});
 		controls.getChildren().add(startSimulationButton);
 		
 		pauseButton = new Button("Pause");
 		pauseButton.setOnAction(value ->  {
-			// rpsController();
+			pressPause();
 		});
 		controls.getChildren().add(pauseButton);
 
 		Button stepButton = new Button("Step");
 		stepButton.setOnAction(value ->  {
-			// rpsController.doOneStep(MILLISECOND_DELAY);
+			rpsController.doOneStep(MILLISECOND_DELAY);
 		});
 		controls.getChildren().add(stepButton);
 		return controls;
